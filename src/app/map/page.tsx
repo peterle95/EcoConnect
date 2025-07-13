@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -6,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { EcoMap } from "@/components/eco-map"
 
 export default function MapPage() {
   return (
@@ -19,16 +19,7 @@ export default function MapPage() {
         </CardHeader>
         <CardContent>
           <div className="relative w-full h-[60vh] rounded-lg overflow-hidden border">
-            <Image
-                src="https://placehold.co/1200x800"
-                alt="Map of eco-friendly locations"
-                layout="fill"
-                objectFit="cover"
-                data-ai-hint="city map"
-            />
-            <div className="absolute inset-0 bg-background/30 flex items-center justify-center">
-                <p className="text-2xl font-bold text-background-foreground bg-background/80 p-4 rounded-lg">Map Coming Soon</p>
-            </div>
+            <EcoMap />
           </div>
         </CardContent>
       </Card>
