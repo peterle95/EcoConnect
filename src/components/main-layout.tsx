@@ -45,9 +45,9 @@ function MainNav() {
           <Link href={item.href}>
             <SidebarMenuButton
               isActive={pathname === item.href}
-              icon={<item.icon />}
               tooltip={item.label}
             >
+              <item.icon className="mr-2" />
               <span className="truncate">{item.label}</span>
             </SidebarMenuButton>
           </Link>
@@ -67,7 +67,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full flex-col bg-muted/40">
+      <div className="flex h-screen w-full flex-row bg-muted/40">
         <Sidebar variant="inset" collapsible="icon">
           <SidebarHeader>
             <Logo />
@@ -76,8 +76,8 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
             <MainNav />
           </SidebarContent>
         </Sidebar>
-        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-            <SidebarInset>
+        <div className="flex flex-col flex-1 h-full sm:pl-14">
+            <SidebarInset className="flex flex-col flex-1 h-full">
                 <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
                     <SidebarTrigger className="sm:hidden" />
                     <div className="ml-auto flex items-center gap-2">
@@ -110,7 +110,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
                         </DropdownMenu>
                     </div>
                 </header>
-                <main className="flex-1 p-4 sm:px-6 sm:py-0">{children}</main>
+                {/* Center the main content on large screens */}
+                <main className="flex-1 flex justify-center w-full overflow-y-auto">
+                  <div className="w-full max-w-4xl px-2 sm:px-6">{children}</div>
+                </main>
             </SidebarInset>
         </div>
       </div>

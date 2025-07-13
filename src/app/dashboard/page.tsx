@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from "react";
-
 import {
   Card,
   CardContent,
@@ -35,20 +33,8 @@ const chartConfig = {
 }
 
 export default function DashboardPage() {
-  const [backendMessage, setBackendMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:3000")
-      .then(res => res.text())
-      .then(setBackendMessage)
-      .catch(() => setBackendMessage("Could not reach backend"));
-  }, []);
-
   return (
-    <div className="grid flex-1 items-start gap-4 md:gap-8">
-      <div style={{ background: "#eee", padding: 8, marginBottom: 16 }}>
-        Backend says: {backendMessage}
-      </div>
+    <div className="grid items-start gap-4 md:gap-8">
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
