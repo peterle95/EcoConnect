@@ -9,8 +9,8 @@ import { Logo } from "@/components/logo"
 
 export default function LoginPage() {
   return (
-    <div className="w-full lg:grid h-full lg:grid-cols-2">
-      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full lg:grid h-screen lg:grid-cols-2 overflow-hidden">
+        <div className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <Logo className="mx-auto h-8" />
@@ -60,14 +60,14 @@ export default function LoginPage() {
           </Card>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
+      <div className="hidden bg-muted lg:block h-full overflow-hidden">
         <Image
-          src="https://placehold.co/1080x1920"
+          src="/images/waterfall640x800.jpg"
           alt="Image"
-          width="1080"
-          height="1920"
+          width={1080}
+          height={1920}
           data-ai-hint="forest nature"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="h-full w-full object-contain dark:brightness-[0.2] dark:grayscale"
         />
       </div>
     </div>
