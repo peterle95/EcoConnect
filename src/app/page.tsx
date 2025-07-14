@@ -62,12 +62,12 @@ export default function LoginPage() {
       </div>
       <div className="hidden bg-muted lg:block h-full overflow-hidden">
         <Image
-          src="/images/waterfall640x800.jpg"
+          src="/images/1200x1200"
           alt="Image"
           width={1080}
           height={1920}
           data-ai-hint="forest nature"
-          className="h-full w-full object-contain dark:brightness-[0.2] dark:grayscale"
+          className="h-full w-full object-screen dark:brightness-[0.2] dark:grayscale"
         />
       </div>
     </div>
