@@ -9,8 +9,8 @@ import { Logo } from "@/components/logo"
 
 export default function SignupPage() {
   return (
-    <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
-       <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full lg:grid h-screen lg:grid-cols-2 overflow-hidden">
+        <div className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
                 <Logo className="mx-auto h-8" />
@@ -32,8 +32,12 @@ export default function SignupPage() {
                 <CardContent>
                     <div className="grid gap-4">
                         <div className="grid gap-2">
-                            <Label htmlFor="full-name">Full Name</Label>
-                            <Input id="full-name" placeholder="John Doe" required />
+                            <Label htmlFor="name">Name</Label> 
+                            <Input id="name" placeholder="John" required />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="surname">Surname</Label> 
+                            <Input id="surname" placeholder="Doe" required />
                         </div>
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
@@ -56,14 +60,14 @@ export default function SignupPage() {
             </Card>
         </div>
        </div>
-       <div className="hidden bg-muted lg:block">
+       <div className="hidden bg-muted lg:block h-full overflow-hidden">
         <Image
-          src="https://placehold.co/1080x1920"
+          src="/images/1200x1200"
           alt="Image"
-          width="1080"
-          height="1920"
-          data-ai-hint="sustainable community"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          width={1080}
+          height={1920}
+          data-ai-hint="forest nature"
+          className="h-full w-full object-screen dark:brightness-[0.2] dark:grayscale"
         />
       </div>
     </div>
