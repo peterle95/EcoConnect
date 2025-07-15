@@ -11,15 +11,57 @@
 - **Recharts**: Charting library for data visualization.
 - **Zod**: TypeScript-first schema validation.
 
-- LOGIN:
-   - Add a video instead of the picture.
-   - For slow connection switch to a static picture of the video
-   - Add functionality for Google, Apple, Meta...
+1. Login Page:
 
-- SIGN IN:
-   - Make same as login
-   - Add password check, i.e. user inserts two times password and check if the same
-   - Add functionality for Google, Apple, Meta...
+- Replace the current static picture background with a video background.
+- Implement logic to detect slow network connections and switch to a static picture backup for the background in such cases.
+- Add social login functionality for Google, Apple, and Meta accounts. This involves integrating their respective SDKs or APIs and handling the authentication flow.
+
+2. Sign Up Page:
+
+- Apply the same background video and static picture fallback as the login page.
+- Implement a password confirmation field.
+- Add JavaScript or TypeScript logic to compare the two password fields and ensure they match before allowing form submission.
+- Integrate social signup functionality for Google, Apple, and Meta accounts, similar to the login page.
+
+## Core Pages:
+
+4. Dashboard:
+
+- Develop the UI for the dashboard page.
+- Integrate with the backend API to fetch eco-impact statistics.
+- Use the Recharts library to create and display charts visualizing the eco-impact data.
+
+5. Directory Page:
+
+- Create the UI for the directory page.
+- Fetch data about organizations from the backend API.
+- Display the organization data in a user-friendly format (e.g., a list, cards, or a table).
+
+6. Feed Page:
+
+- Build the UI for the feed page.
+- Retrieve community posts data from the backend API.
+- Display the feed content, including post details and potentially user information.
+
+7. Eco-Map Integration:
+
+- Integrate the @react-google-maps/api library into the relevant page (likely a dedicated map page or integrated into the dashboard).
+- Fetch eco-map data (e.g., locations of eco-friendly businesses, community projects) from the backend API.
+- Display the eco-map using the fetched data, including markers, info windows, or other relevant map features.
+
+8. Component Development:
+
+- Utilize Shadcn UI: Throughout the frontend development process, leverage the Shadcn UI component library to build modern and accessible - - UI elements for all pages and components.
+
+9. Data Handling and Validation:
+
+- API Integration: Implement functions and hooks to interact with the backend API for fetching and sending data for all frontend features.
+- Data Validation: Use Zod for TypeScript-first schema validation to ensure the integrity of data received from the backend and user input.
+
+10. Styling:
+
+- Tailwind CSS: Use Tailwind CSS classes to style all frontend components and pages, ensuring a consistent and responsive design.
 
 ### Backend
 - **NestJS**: Progressive Node.js framework for building efficient, scalable server-side applications.
