@@ -16,9 +16,11 @@
 - Replace the current static picture background with a video background.
 - Implement logic to detect slow network connections and switch to a static picture backup for the background in such cases.
 - Add social login functionality for Google, Apple, and Meta accounts. This involves integrating their respective SDKs or APIs and handling the authentication flow.
+- Depending if user is person or organisation it brings you to different dashboards
 
 2. Sign Up Page:
 
+- Option for organizations
 - Apply the same background video and static picture fallback as the login page.
 - Implement a password confirmation field.
 - Add JavaScript or TypeScript logic to compare the two password fields and ensure they match before allowing form submission.
@@ -31,6 +33,15 @@
 - Develop the UI for the dashboard page.
 - Integrate with the backend API to fetch eco-impact statistics.
 - Use the Recharts library to create and display charts visualizing the eco-impact data.
+
+4.1 Profile Page
+
+- User can insert different activities like:
+      - think of activities
+- Other user functionalities
+
+4.2 Organizations Page
+- Similar to user but with tailored to organizations
 
 5. Directory Page:
 
