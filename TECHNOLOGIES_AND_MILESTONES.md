@@ -11,6 +11,16 @@
 - **Recharts**: Charting library for data visualization.
 - **Zod**: TypeScript-first schema validation.
 
+- LOGIN:
+   - Add a video instead of the picture.
+   - For slow connection switch to a static picture of the video
+   - Add functionality for Google, Apple, Meta...
+
+- SIGN IN:
+   - Make same as login
+   - Add password check, i.e. user inserts two times password and check if the same
+   - Add functionality for Google, Apple, Meta...
+
 ### Backend
 - **NestJS**: Progressive Node.js framework for building efficient, scalable server-side applications.
 - **Prisma ORM**: Type-safe database ORM for PostgreSQL.
