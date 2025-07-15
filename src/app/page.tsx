@@ -62,7 +62,7 @@ export default function LoginPage() {
       </div>
       <div className="hidden bg-muted lg:block h-full overflow-hidden">
         <video
-          src="/videos/login1.mp4" // <-- Place your video in the public/videos folder and update the path accordingly
+          src="/videos/login1.mp4"
           autoPlay
           loop
           muted
