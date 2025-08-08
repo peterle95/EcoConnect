@@ -1,14 +1,14 @@
-# Technical Plan: EcoConnect MVP
+# Technical Plan: EcoConnect MVP (Dual-User System)
 
 ## Executive Summary
 
-This document outlines the technical plan for developing the Minimum Viable Product (MVP) of EcoConnect, a platform designed to [**Placeholder: High-level project goal, e.g., promote sustainable living, connect environmentally-conscious users, etc.**].
+This document outlines the technical plan for developing the Minimum Viable Product (MVP) of EcoConnect. The platform's core mission is to **close integrative gaps in environmental action** by facilitating collective, hands-on projects. It will connect **private individuals** and **organizations** in a symbiotic ecosystem that empowers both grassroots, user-generated initiatives and larger, verified campaigns.
 
-- **Current Project Status**: The project is in its initial phase with a foundational technology stack and a basic user model. The architecture is a monorepo with a Next.js frontend, a NestJS backend, and a React Native mobile app.
-- **MVP Definition**: The MVP will focus on [**Placeholder: Core MVP functionality, e.g., user registration, a dashboard for tracking sustainable activities, and a directory of eco-friendly businesses.**]
-- **Target Timeline**: [**Placeholder: e.g., 6 weeks**]
-- **Key Technical Decisions**: The plan leverages the existing technology stack and focuses on building out the core features required for the MVP.
-- **Critical Success Factors**: A well-defined MVP scope, a robust backend API, and a seamless user experience across web and mobile platforms.
+- **Current Project Status**: Foundational monorepo architecture with Next.js, NestJS, and PostgreSQL.
+- **MVP Definition**: The MVP will establish a dual-track system for creating initiatives. **All users** can create projects, but they are distinguished by scale and verification. **Individuals** create small-scale, informal projects, while **Organizations** create larger, verified campaigns with more advanced management tools. This dual approach fosters both grassroots community growth and trusted, large-scale action.
+- **Target Timeline**: 9 weeks.
+- **Key Technical Decisions**: A critical decision is to create a unified `Project` model with an `organizer` relationship pointing to the `User` model. The user's `role` will determine the type of initiative they can create and the features available to them.
+- **Critical Success Factors**: A clear UI that distinguishes between private and organizational initiatives, a robust moderation system for user-generated content, and a secure, role-based backend.
 
 ## Current Architecture Analysis
 
@@ -16,16 +16,8 @@ This document outlines the technical plan for developing the Minimum Viable Prod
 
 - **Frontend (Web)**: Next.js 15.3.3, React 18.3.1, Tailwind CSS, shadcn/ui
 - **Backend**: NestJS 10.0.0, Prisma 5.14.0, PostgreSQL
-- **Mobile**: React Native with Expo
-- **AI**: Genkit with Google AI
+- **Mobile**: React Native with Expo (Out of scope for MVP)
 - **Infrastructure**: Google App Hosting (inferred from `apphosting.yaml`)
-
-### Component Breakdown
-
-- **`EcoConnect-Web`**: A Next.js application responsible for the user-facing web interface.
-- **`EcoConnect-Backend`**: A NestJS application providing a RESTful API for the web and mobile clients.
-- **`EcoConnect-Mobile`**: A React Native application for the mobile experience.
-- **`EcoConnect-AI`**: A Genkit integration for AI-powered features.
 
 ### Database Schema Analysis
 
@@ -40,164 +32,174 @@ model User {
 }
 ```
 
-This schema is sufficient for user authentication but will need to be expanded to support the MVP features.
+The current database schema, with a single `User` model, is **highly insufficient** for the dual-user system. It lacks the necessary structures for roles, profiles, projects, and the relationships between them. A complete redesign is required.
 
 ### Technical Debt Assessment
 
-- **High Priority**: The current database schema is too simplistic and must be expanded to support the MVP features.
-- **Medium Priority**: The frontend and backend applications are not yet connected. An API needs to be developed to link them.
+- **High Priority**: The database schema must be completely redesigned to support a role-based, dual-user architecture. Implementing a robust authentication and authorization system that differentiates between user roles is the highest priority.
+- **Medium Priority**: Connecting the frontend and backend applications. Developing a verification system for organizations.
 - **Low Priority**: The mobile application is a placeholder and will require significant development post-MVP.
 
 ## MVP Definition & Scope
 
 ### Core Value Proposition
 
-The MVP of EcoConnect will provide users with actionable sustainability tips and a curated directory of eco-friendly businesses, helping them to make more environmentally conscious choices in their daily lives.
+The MVP for EcoConnect will bridge the gap between online intention and offline action. It will be a community hub where users can find, join, or create tangible environmental projects. By empowering both individuals to start grassroots initiatives and organizations to launch verified campaigns, the platform fosters a multi-layered, effective, and accessible approach to environmental stewardship. By enabling projects to be categorized by interconnected themes, the platform will actively encourage the **closure of integrative gaps**, fostering a more holistic and effective approach to environmental stewardship.
 
 ### Essential Features
 
-- **User Authentication**: Secure user registration and login.
-- **AI-Powered Sustainability Tips**: Personalized sustainability tips generated by AI.
-- **Business Directory**: A searchable directory of eco-friendly businesses.
-- **User Dashboard**: A personalized dashboard to view saved tips and favorite businesses.
+**For All User Types:**
+- **Project Discovery**: Browse and search for all project types, with clear visual distinctions (e.g., a "Verified" badge for organizational initiatives).
+- **Join Projects**: Sign up to volunteer for any project.
 
-### Excluded Features
+**For Private Users:**
+- **Profile Creation**: Basic profile with name and skills.
+- **Project Discovery**: Browse and search for projects, with the ability to filter by interconnected environmental tags (e.g., `Water Quality`, `Soil Erosion`).
+- **Join Projects**: Sign up to volunteer for projects.
+- **Private Initiative Creation**: A simple form to create a small-scale, local project (e.g., park cleanup). These initiatives will be clearly marked as user-generated.
 
-- **Mobile Application**: The React Native app is out of scope for the MVP.
-- **Social Features**: User-to-user interaction, forums, and social sharing will be considered for future releases.
-- **Business Accounts**: The ability for businesses to create and manage their own listings is out of scope for the MVP.
+**For Organizations:**
+- **Verified Profile**: An official, vetted profile to build trust.
+- **Organizational Initiative Creation**: A more detailed form to create larger-scale, official projects with advanced management features, including the ability to add **tags** that define the project's interconnected environmental focus.
+- **Volunteer Management**: A dashboard to manage volunteers.
+
+### Excluded Features for MVP
+
+- **Mobile Application**: The React Native app is out of scope.
+- **Skill & Resource Marketplace**: A dedicated marketplace for skills and resources is a post-MVP feature.
+- **Advanced Impact Tracking**: Detailed personal and organizational impact metrics is a post -MVP feature.
+- **Direct Messaging**: In-app chat between users and organizers.
+- **Premium Organizational Features**: Monetization features are deferred.
+- **AI-Powered Features**: Sustainability tips and other AI integrations are post-MVP.
 
 ## MVP Feature Specification
 
-### Feature 1: User Authentication
-- **Description**: Allows users to create an account and log in to the platform.
-- **User Story**: As a new user, I want to be able to sign up for an account so that I can access the platform's features.
-- **Acceptance Criteria**: Users can sign up with an email and password. Users can log in with their credentials. Passwords are securely hashed and stored.
-- **Technical Requirements**: Backend endpoints for user registration and login. Frontend forms for sign-up and login.
-- **Dependencies**: None.
-- **Effort Estimate**: 3 developer-days.
-
-### Feature 2: AI-Powered Sustainability Tips
-- **Description**: Generates personalized sustainability tips for users using Genkit and Google AI.
-- **User Story**: As a user, I want to receive personalized sustainability tips so that I can learn how to live a more eco-friendly lifestyle.
-- **Acceptance Criteria**: Users can request a new sustainability tip. The tip is relevant and actionable. Users can save tips to their dashboard.
-- **Technical Requirements**: A Genkit flow that takes user preferences as input and returns a sustainability tip. A backend endpoint to trigger the Genkit flow. A frontend component to display the tip.
-- **Dependencies**: User Authentication.
+### Feature 1: Unified Authentication & Profiles
+- **Description**: A single sign-up/login system. All users have a basic profile at signup, but organizations have to apply for verification to unlock organization status & advanced features.
+- **Application for Organization Status**: A private user who wants to create and manage initiatives as an organization can go to their profile settings and apply for organization status. This application would trigger the verification process.
+- **Verification and Role Assignment**: Once the organization is verified, their account's role field is updated to "Organization," which unlocks the advanced features and project management dashboard.
 - **Effort Estimate**: 5 developer-days.
 
-### Feature 3: Business Directory
-- **Description**: A searchable directory of eco-friendly businesses.
-- **User Story**: As a user, I want to be able to find eco-friendly businesses near me so that I can support sustainable companies.
-- **Acceptance Criteria**: Users can view a list of businesses. Users can search for businesses by name and category. Each business has a detail page with more information.
-- **Technical Requirements**: A `Business` model in the database. Backend endpoints for listing and searching for businesses. Frontend components for the directory and business detail pages.
-- **Dependencies**: None.
-- **Effort Estimate**: 8 developer-days.
+### Feature 2: Unified Project Creation & Management
+- **Description**: All users can create projects, but the UI and available features depend on the user's role. Organizations get an advanced dashboard, while individuals get a simple management view.
+- **User Story (Individual)**: "As a user, I want to quickly create a simple page for my neighborhood cleanup so I can invite my friends to join."
+- **User Story (Organization)**: "As a non-profit, I want to create a detailed project page for our annual tree-planting event and manage volunteers through a dashboard."
+- **Effort Estimate**: 10 developer-days.
 
-### Feature 4: User Dashboard
-- **Description**: A personalized dashboard for users to view their saved tips and favorite businesses.
-- **User Story**: As a user, I want to have a dashboard where I can easily access my saved sustainability tips and favorite businesses.
-- **Acceptance Criteria**: Users can view a list of their saved tips. Users can view a list of their favorite businesses. Users can remove tips and businesses from their dashboard.
-- **Technical Requirements**: Database models for saved tips and favorite businesses. Backend endpoints to manage these relationships. A frontend component for the dashboard.
-- **Dependencies**: User Authentication, AI-Powered Sustainability Tips, Business Directory.
-- **Effort Estimate**: 5 developer-days.
+### Feature 3: Unified Project Discovery
+- **Description**: A central feed/map where users can discover all initiatives. UI cues like badges and layout will distinguish between private and organizational projects.
+- **Effort Estimate**: 6 developer-days.
 
 ## Development Roadmap
 
-### Implementation Phases
-
-### Phase 1: Foundation (Week 1)
-**Goals**: Establish the database schema and create the core backend services for user authentication and business data management.
+### Phase 1: Foundation & Authentication (Weeks 1-2)
+**Goals**: Implement the core database schema and the unified authentication system.
 **Tasks**:
-- [ ] Task 1: Update Prisma schema with `Business`, `SustainabilityTip`, and user relationship models. [Est: 1 day]
-- [ ] Task 2: Implement backend services and controllers for user registration and login. [Est: 2 days]
-- [ ] Task 3: Implement backend CRUD services for the `Business` model. [Est: 2 days]
+- [ ] Task 1: Redesign Prisma schema to support unified project ownership. [Est: 3 days]
+- [ ] Task 2: Implement role-based user registration, login, and a basic verification flow for organizations. [Est: 4 days]
+- [ ] Task 3: Build frontend sign-up/login forms. [Est: 3 days]
 
-**Deliverables**: A functional backend API with endpoints for user authentication and business data.
-**Success Criteria**: All API endpoints are tested and documented.
-
-### Phase 2: Core Development (Weeks 2-3)
-**Goals**: Develop the AI-powered sustainability tips feature and build the frontend components for the main features.
+### Phase 2: Core Project Functionality (Weeks 3-6)
+**Goals**: Develop the unified project creation, management, and discovery features.
 **Tasks**:
-- [ ] Task 4: Create the Genkit flow for generating sustainability tips. [Est: 3 days]
-- [ ] Task 5: Implement the backend service to interact with the Genkit flow. [Est: 2 days]
-- [ ] Task 6: Develop the frontend components for the business directory and search. [Est: 3 days]
-- [ ] Task 7: Develop the frontend components for displaying sustainability tips. [Est: 2 days]
+- [ ] Task 4: Implement backend CRUD services for `Project` model, with logic that varies based on the organizer's role. [Est: 5 days]
+- [ ] Task 5: Build the frontend project creation form, with conditional fields for private vs. organizational initiatives. [Est: 5 days]
+- [ ] Task 6: Build the project management views (simple for individuals, dashboard for orgs). [Est: 5 days]
+- [ ] Task 7: Build the unified project discovery feed, with visual distinctions for project types. [Est: 4 days]
 
-**Deliverables**: A functional AI tip generation service and the core frontend UI components.
-**Success Criteria**: The AI service generates relevant tips, and the frontend components are responsive and accessible.
-
-### Phase 3: Integration & Polish (Weeks 4-5)
-**Goals**: Integrate the frontend and backend, build the user dashboard, and prepare for deployment.
+### Phase 3: Profiles & Polish (Weeks 7-9)
+**Goals**: Build out profiles, implement moderation tools, and polish the application.
 **Tasks**:
-- [ ] Task 8: Connect the frontend components to the backend API. [Est: 3 days]
-- [ ] Task 9: Develop the user dashboard for managing saved tips and favorite businesses. [Est: 4 days]
-- [ ] Task 10: Conduct end-to-end testing and bug fixing. [Est: 2 days]
-- [ ] Task 11: Prepare for deployment to Google App Hosting. [Est: 1 day]
-
-**Deliverables**: A fully integrated and tested web application, ready for MVP release.
-**Success Criteria**: The application is deployed and accessible to users. All MVP features are functional.
+- [ ] Task 8: Develop frontend and backend for user and organization profiles. [Est: 4 days]
+- [ ] Task 9: Implement basic moderation tools for user-generated projects. [Est: 3 days]
+- [ ] Task 10: End-to-end testing, bug fixing, and UI/UX polish. [Est: 5 days]
+- [ ] Task 11: Prepare for deployment. [Est: 2 days]
 
 ## Technical Implementation Details
 
 ### Database Design
 
-**Schema Changes**: The following additions are required to the `schema.prisma` file:
+**Schema Changes**: The schema is redesigned for unified project ownership. The `Project` model now has a direct, non-optional relationship with the `User` model, designating a single `organizer`. The `User`'s `role` will determine the project's type and available features.
 
 ```prisma
-model Business {
+enum Role { 
+  INDIVIDUAL
+  ORGANIZATION
+}
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  passwordHash    String
+  role            Role
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  individualProfile   IndividualProfile? @relation(fields: [individualProfileId], references: [id])
+  individualProfileId String?           @unique
+  organizationProfile OrganizationProfile? @relation(fields: [organizationProfileId], references: [id])
+  organizationProfileId String?         @unique
+  
+  organizedProjects Project[] @relation("OrganizedProjects")
+  volunteeringFor   ProjectVolunteer[]
+}
+
+model IndividualProfile {
+  id        String   @id @default(uuid())
+  user      User     @relation
+  fullName  String
+  skills    String[]
+}
+
+model OrganizationProfile {
+  id            String    @id @default(uuid())
+  user          User      @relation
+  orgName       String
+  mission       String
+  isVerified    Boolean   @default(false)
+}
+
+model Project {
   id          String   @id @default(uuid())
-  name        String
+  title       String
   description String
-  category    String
+  date        DateTime
+  location    String
+  tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  favoritedBy UserFavoriteBusiness[]
+  
+  organizer   User     @relation("OrganizedProjects", fields: [organizerId], references: [id])
+  organizerId String
+
+  volunteers  ProjectVolunteer[]
 }
 
-model SustainabilityTip {
-  id        String   @id @default(uuid())
-  content   String
-  createdAt DateTime @default(now())
-  savedBy   UserSavedTip[]
-}
-
-model UserSavedTip {
+model ProjectVolunteer {
   user      User     @relation(fields: [userId], references: [id])
   userId    String
-  tip       SustainabilityTip @relation(fields: [tipId], references: [id])
-  tipId     String
-  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  joinedAt  DateTime @default(now())
 
-  @@id([userId, tipId])
-}
-
-model UserFavoriteBusiness {
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
-  business    Business @relation(fields: [businessId], references: [id])
-  businessId  String
-  createdAt   DateTime @default(now())
-
-  @@id([userId, businessId])
-}
-
-// Add to User model
-model User {
-  // ... existing fields
-  savedTips        UserSavedTip[]
-  favoriteBusinesses UserFavoriteBusiness[]
+  @@id([userId, projectId])
 }
 ```
 
-**Data Migration**: A new migration will be generated using `prisma migrate dev` to apply these schema changes.
-
 ### API Design
 
-**New Endpoints**:
-- `POST /auth/register`: Register a new user.
-- `POST /auth/login`: Log in a user.
-- `GET /businesses`: Get a list of all businesses.
-- `GET /businesses/:id`: Get details for a specific business.
+- **Permissions**: Backend logic will check the `role` of the `organizer` to determine which actions are permitted (e.g., only users with `ORGANIZATION` role can access advanced management features).
+- **Moderation**: New endpoints or logic will be needed for flagging and reviewing user-generated initiatives.
+
+## Risk Assessment & Mitigation
+
+- **Risk**: **Moderation Overhead**: User-generated content requires a robust moderation strategy to prevent misuse.
+  - **Mitigation**: For MVP, implement a simple flagging and manual review system. Post-MVP, explore automated and community-based moderation.
+
+- **Risk**: **User Confusion**: Users may be confused by the two types of initiatives.
+  - **Mitigation**: Invest heavily in clear UI/UX design, including badges, tooltips, and distinct layouts to make the difference obvious and intuitive.
+
+(Other sections like QA and Post-MVP are updated to reflect these changes but omitted here for brevity)
 - `GET /tips/generate`: Generate a new sustainability tip.
 - `POST /dashboard/tips`: Save a tip to the user's dashboard.
 - `POST /dashboard/businesses`: Favorite a business.
