@@ -9,9 +9,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
+
 
 enum Role { 
   INDIVIDUAL
@@ -26,10 +28,8 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
-  individualProfile   IndividualProfile? @relation(fields: [individualProfileId], references: [id])
-  individualProfileId String?           @unique
-  organizationProfile OrganizationProfile? @relation(fields: [organizationProfileId], references: [id])
-  organizationProfileId String?         @unique
+  individualProfile   IndividualProfile?
+  organizationProfile OrganizationProfile?
   
   organizedProjects Project[] @relation("OrganizedProjects")
   volunteeringFor   ProjectVolunteer[]
@@ -37,14 +37,16 @@ model User {
 
 model IndividualProfile {
   id        String   @id @default(uuid())
-  user      User     @relation
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
   fullName  String
   skills    String[]
 }
 
 model OrganizationProfile {
   id            String    @id @default(uuid())
-  user          User      @relation
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String    @unique
   orgName       String
   mission       String
   isVerified    Boolean   @default(false)
