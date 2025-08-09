@@ -60,14 +60,26 @@ export default function LoginPage() {
           </Card>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block h-full overflow-hidden">
+      {/* This div is the alternative for the image background */}
+      {/* <div className="hidden bg-muted lg:block h-full overflow-hidden">
         <Image
           src="/images/1200x1200"
           alt="Image"
-          width={1080}
+          width={1080} 
           height={1920}
           data-ai-hint="forest nature"
           className="h-full w-full object-screen dark:brightness-[0.2] dark:grayscale"
+        />
+      </div> */}
+      <div className="hidden bg-muted lg:block h-full overflow-hidden">
+        <video
+          src="/videos/login1.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          poster="/images/1200x1200" // Optional: fallback image before video loads
         />
       </div>
     </div>

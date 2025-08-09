@@ -9,13 +9,71 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+enum Role { 
+  INDIVIDUAL
+  ORGANIZATION
 }
 
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
+  id              String    @id @default(uuid())
+  email           String    @unique
+  passwordHash    String
+  role            Role
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  individualProfile   IndividualProfile?
+  organizationProfile OrganizationProfile?
+  
+  organizedProjects Project[] @relation("OrganizedProjects")
+  volunteeringFor   ProjectVolunteer[]
+}
+
+model IndividualProfile {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  fullName  String
+  skills    String[]
+}
+
+model OrganizationProfile {
+  id            String    @id @default(uuid())
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String    @unique
+  orgName       String
+  mission       String
+  isVerified    Boolean   @default(false)
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  organizer   User     @relation("OrganizedProjects", fields: [organizerId], references: [id])
+  organizerId String
+
+  volunteers  ProjectVolunteer[]
+}
+
+model ProjectVolunteer {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  joinedAt  DateTime @default(now())
+
+  @@id([userId, projectId])
 }
