@@ -15,6 +15,7 @@ export default function SignupPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [role, setRole] = useState<"INDIVIDUAL" | "ORGANIZATION">("INDIVIDUAL")
   const [fullName, setFullName] = useState("")
   const [surname, setSurname] = useState("")
@@ -24,6 +25,10 @@ export default function SignupPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
+    if (password !== confirmPassword) {
+      setError("Passwords do not match")
+      return
+    }
     setLoading(true)
     try {
       const apiBase = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
@@ -89,6 +94,10 @@ export default function SignupPage() {
                   <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="grid gap-2">
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input id="confirmPassword" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                </div>
+                <div className="grid gap-2">
                   <Label htmlFor="role">Role</Label>
                   <select id="role" className="border rounded h-10 px-3 bg-background" value={role} onChange={(e) => setRole(e.target.value as any)}>
                     <option value="INDIVIDUAL">Individual</option>
@@ -98,7 +107,10 @@ export default function SignupPage() {
                 {error && (
                   <p className="text-sm text-red-500" role="alert">{error}</p>
                 )}
-                <Button type="submit" className="w-full" disabled={loading}>
+                {password && confirmPassword && password !== confirmPassword && (
+                  <p className="text-sm text-red-500" role="alert">Passwords do not match</p>
+                )}
+                <Button type="submit" className="w-full" disabled={loading || password !== confirmPassword}>
                   {loading ? "Creating..." : "Create Account"}
                 </Button>
               </div>
