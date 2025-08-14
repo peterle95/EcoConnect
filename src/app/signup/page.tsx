@@ -54,26 +54,17 @@ export default function SignupPage() {
     }
   }
 
-  return (
+  return ( // TODO . MAKE THIS RESPONSIVE, some devices are not showing the form
     <div className="w-full lg:grid h-screen lg:grid-cols-2 overflow-hidden">
-      <div className="py-12 px-4 sm:px-6 lg:px-8">
+      <div className="py-3 px-4 sm:px-6 lg:px-8">
         <form onSubmit={onSubmit} className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <Logo className="mx-auto h-8" />
             <h1 className="text-3xl font-bold font-headline">Create an Account</h1>
-            <p className="text-balance text-muted-foreground">
-              Join our community and start your sustainability journey
-            </p>
           </div>
           <Card>
             <CardHeader>
               <CardTitle className="text-2xl font-headline">Sign Up</CardTitle>
-              <CardDescription>
-                Already have an account?{" "}
-                <Link href="/" className="underline">
-                  Login
-                </Link>
-              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
