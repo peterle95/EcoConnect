@@ -41,7 +41,7 @@ export default function SignupPage() {
       if (data?.access_token) {
         try { localStorage.setItem("access_token", data.access_token) } catch {}
       }
-      router.push("/dashboard")
+      router.push("/")
     } catch (err: any) {
       setError(err.message || "Unexpected error")
     } finally {
